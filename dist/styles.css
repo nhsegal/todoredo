@@ -1,0 +1,246 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  display: grid;
+  grid-template-columns: 16rem 4fr;
+  margin: 0;
+  padding: 0;
+}
+
+body ul {
+  list-style: none;
+}
+
+body a, body a:visited {
+  text-decoration: none;
+  color: rgb(110,100,100);
+}
+
+body a:hover {
+  color: black;
+}
+
+header {
+  background: rgb(102 195 255);
+  grid-area: 1 / 1 / 2 / 3;
+  display: flex;
+  grid-template-columns: 1fr 1fr;;
+  grid-template-rows: 3rem;
+  padding: 15px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0px;
+  height: 2rem;
+}
+
+#add-a-task {
+  height: 2.5rem;
+  width: 10rem;
+  font-size: 1.5rem;
+  border-radius: 2rem;
+  background: white;
+  transition: 0.2s ease-in-out all;
+  border: 0.5px solid grey;
+  box-shadow: 5px 2px 5px rgb(40,40,40);
+}
+
+#add-a-task:hover{
+  box-shadow: 7px 4px 7px rgb(10,10,10);
+}
+
+#add-a-task:active{
+  box-shadow: 2px 1px 3px rgb(10,10,10);
+}
+
+#sidebar {
+  background: var(--sidebar-color);
+  grid-area: 2 / 1 / 3 / 2;
+  padding-top: 1em;
+  padding-right: 1rem;    
+  padding-left: 0rem;
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid rgb(200,200,200);
+  height: 90vh;
+  font-size: 1.2rem;
+  transition: 0.2s ease-in-out all;
+}
+
+#sidebar li {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 5px;
+  border-radius: 20px;
+  padding: 0.2rem 1rem;
+  margin: 0rem;
+  width: 10rem;
+  color: rgb(110,100,100);
+}
+
+#sidebar li:hover {
+  color: black !important;
+}
+
+#sidebar #list-by-project>li{
+  font-size: 1.0rem;
+}
+
+#sidebar .material-icons{
+  vertical-align: bottom;
+}
+
+
+#sidebar a:nth-child(1) {
+  width: 8rem;
+  border-radius: 1rem;
+  background-color: white;
+  padding: 0.2rem 0.8rem;
+}
+
+#sidebar a:nth-child(1):hover .material-icons{
+  
+  color: black !important;
+}
+
+#sidebar a:nth-child(1):active {
+  background: rgb(200,200,200);
+}
+
+#sidebar a:nth-child(2) {
+  font-size: 20px;
+}
+
+#sidebar a:nth-child(2):active {
+  color: red;
+}
+
+.material-icons{
+  color: rgb(110,100,100);
+}
+
+main {
+  background: white;
+  grid-area: 2 / 2 / 3 / 3;
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  gap: 10px;
+}
+
+.card {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid rgb(150,150,150);
+  box-shadow: 5px 2px 5px rgb(150,150,150);
+  border-radius: 10px;
+  padding: 1rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  gap: 1rem;
+  color: black;
+  transition: 0.2s ease-in-out;
+  align-items: center;
+}
+
+.card:hover {
+  box-shadow: 7px 4px 7px rgb(50,50,50);
+
+ 
+}
+.card.is-completed {
+  color: rgb(140, 140, 140);
+}
+
+.task-due-date {
+  margin-left: auto;
+  margin-right: 0;
+}
+.card.important .task-name {
+  font-weight: 900;
+}
+
+hr {
+  border: .5px solid rgb(100,100,100);
+  width: 90%;
+}
+
+.heading {
+  padding-left: 2rem;
+  font-size: 2rem;
+}
+
+.subheading {
+  font-size: 1.3rem;
+  padding-left: 2rem;
+  color: rgb(110,100,100);
+}
+
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 1;
+  z-index: 1;
+  display: flex;
+}
+.modal.closed {
+  display: none;
+}
+
+.modal-content {
+  position: absolute;
+  top: 20%;
+  left: 43%;
+  background-color: white;
+  padding: .1rem 0.5rem 0.5rem 0.5rem;
+  border-radius: 0.5rem;   
+}
+
+#task-form {
+  text-align: right;
+  gap: 9px;
+  display: grid;
+  grid-template-columns: 6rem 17rem 1rem;
+  grid-template-rows: 1.7rem 1.7rem 1.7rem 1.7rem 1.7rem 1.7rem;
+  align-items: baseline;
+}
+
+
+
+#priority-options {
+  text-align: center;
+  display: flex;
+  justify-content: left;
+  gap: 3rem;
+  padding-right: 2rem;
+}
+
+#modal-submit {
+  grid-column: 1 / 3;
+  width: 7rem;
+  justify-self: center;
+  grid-row: 6;
+  grid-column: 1 / span 3;
+}
+
+#close-modal-button {
+  display: inline-flex;
+  font-size: 2rem;
+  align-self: center;
+  grid-row: 1;
+  grid-column: 3;
+  width: 1rem;
+  border-radius: 2rem;
+  height: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+#close-modal-button:hover{
+  cursor: default;
+  background: rgb(200,200,200);
+}
