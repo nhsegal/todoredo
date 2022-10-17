@@ -78,9 +78,7 @@ export function renderMain(masterList, option, byProjectName = null) {
   }
 
   if (option === 'byProject') {
-    console.log(byProjectName)
     const projectList = masterList.produceTasksInAProject(byProjectName);
-    console.log(projectList)
     const projectHeading = document.createElement('div');
     projectHeading.classList.add('heading');
     projectHeading.textContent = byProjectName;

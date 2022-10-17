@@ -64,7 +64,7 @@ const sortByDateThenPriorityThenAlpha = (a,b) => {
       return -1
     }
   }
-  return (b.content.localeCompare(a.content));
+  return (a.content.localeCompare(b.content));
 };
 
 export default masterList();

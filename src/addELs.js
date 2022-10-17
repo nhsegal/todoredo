@@ -194,11 +194,12 @@ export function addInitialEventListeners() {
     if (editting) {
       const taskToEdit = masterList.data.filter((e) => (e.id == IDNumber))[0];
       masterList.editTask(taskToEdit, 'content', DOM.newTaskContent.value);
-      masterList.editTask(taskToEdit, 'date', new Date(DOM.newTaskDate.value));
+      let taskDate = new Date(DOM.newTaskDate.value);
+      taskDate.setHours(0, 0, 0, 0);  
+      masterList.editTask(taskToEdit, 'date', taskDate);
       const option = Array.from(DOM.newTaskPriority).filter(
         (priorityLevel) => priorityLevel.checked,
       )[0];
-      console.log(option.value)
       masterList.editTask(taskToEdit, 'priority', option.value);
       masterList.editTask(taskToEdit, 'project', DOM.newTaskProject.value);
       masterList.sortByDate();
@@ -247,6 +248,7 @@ export function addInitialEventListeners() {
     addSideProjectEventListeners();
     addSideTimeEventListeners();
     addMainEventListeners();
+    masterList.sortByDate();    
   };
 
   DOM.addTaskBtn.addEventListener('click', () => {

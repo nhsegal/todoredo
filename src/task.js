@@ -2,8 +2,10 @@
 const makeTask = function (date, content, priority, project = null) {
   let isCompleted = false;
   const id = Math.floor(Math.random() * 100000000);
+  let taskDate = new Date(date);
+  taskDate.setHours(0, 0, 0, 0);
   return {
-    date: new Date(date),
+    date: taskDate,
     content,
     isCompleted,
     priority,
