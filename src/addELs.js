@@ -135,11 +135,9 @@ export function addSideProjectEventListeners() {
         currentSettings.viewBy,
         currentSettings.whichProject,
       );
-      console.log(masterList.getListOfProjects());
       renderSideBar(masterList.getListOfProjects());
       addSideProjectEventListeners();
       addMainEventListeners();
-      console.log(masterList.getListOfProjects());
     } else {
       console.log('You pressed Cancel!');
     }
