@@ -10,7 +10,7 @@ module.exports = {
     filename: 'main.js',
     clean: false,
   },
-  devtool: 'inline-source-map',
+  devtool: false,
   devServer: {
     static: path.resolve(__dirname, 'dist'),
     port: 8080,

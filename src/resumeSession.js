@@ -7,11 +7,12 @@ import { addInitialEventListeners,
   addSideProjectEventListeners  
 } from './addELs.js';
 import currentSettings from './currentSettings';
+import makeTask from './task';
 
 function myFunction(dataFromServer) {
   const parsedJSON = JSON.parse(dataFromServer);
   for (let i = 0; i < parsedJSON.length; i++) {
-    const t = new Task(parsedJSON[i].date, parsedJSON[i].content, parsedJSON[i].priority);
+    const t = makeTask(parsedJSON[i].date, parsedJSON[i].content, parsedJSON[i].priority);
     t.project = parsedJSON[i].project;
     t.completed = parsedJSON[i].completed;
     masterList.data.push(t);
