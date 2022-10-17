@@ -2,7 +2,11 @@ import makeTask from './task';
 import masterList from './masterList';
 import { renderMain, renderAddTaskModal, renderSideBar } from './render';
 import DOM from './DOMCache';
-import { addInitialEventListeners, addMainEventListeners,  addSideTimeEventListeners,  addSideProjectEventListeners  } from './addELs.js';
+import { addInitialEventListeners, 
+  addMainEventListeners,  
+  addSideTimeEventListeners,  
+  addSideProjectEventListeners  
+} from './addELs.js';
 
 const initialSetup = function (){
   const today = new Date();
