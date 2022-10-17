@@ -120,7 +120,7 @@ export function addSideTimeEventListeners() {
 export function addSideProjectEventListeners() {
   const removeThis = function (e) {
     if (confirm('Delete this project and all tasks in it?')) {
-      const tasksToRemove = masterList.produceProjectList(
+      const tasksToRemove = masterList.produceTasksInAProject(
         e.target.previousElementSibling.id,
       );
       tasksToRemove.forEach((item) => masterList.removeTask(item));
