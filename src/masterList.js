@@ -1,11 +1,11 @@
 const masterList = function () {
   const data = [];
-  const listToDisplay = [];
+  const displayedList = [];
 
   const editTask = (task, attribute, value) => {
-    for (let i = 0; i < this.data.length; i++) {
-      if (this.data[i].id == task.id) {
-        this.data[i][attribute] = value;
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].id == task.id) {
+        data[i][attribute] = value;
         return;
       }
     }
@@ -16,9 +16,9 @@ const masterList = function () {
     data.sort(sortByDateThenPriorityThenAlpha);
   }
 
-  const produceProjectList = (project) => {
-    data.filter( (task) => task.project === project)
-      .sort(sortByDateThenPriorityThenAlpha); 
+  const produceTasksInAProject = (project) => {
+    let filtered = data.filter( (task) => task.project === project);
+    return filtered;
   }
 
   const getListOfProjects = () => {
@@ -31,13 +31,24 @@ const masterList = function () {
     return allProjects;
   }
 
+  const removeTask = (t) => {
+    data.splice(data.indexOf(t), 1);
+  }
+
+  const addTask = (t) => {
+    data.push(t);
+    sortByDate();
+  }
+
   return {
     data,
-    listToDisplay,
+    displayedList,
     editTask,
     sortByDate,
-    produceProjectList,
-    getListOfProjects
+    produceTasksInAProject,
+    getListOfProjects,
+    removeTask,
+    addTask
   }
 }
 
@@ -46,17 +57,14 @@ const sortByDateThenPriorityThenAlpha = (a,b) => {
   if (byDate !== 0) {
     return byDate;
   }
-  if (a.priority.localeCompare(b.priority) !== 0) {
-    return a.priority.localeCompare(b.priority);
+  if (a.priority !== b.priority) {
+    if (a.priority === "normal") {
+      return 1
+    } else {
+      return -1
+    }
   }
-    return (a.content.toLowerCase().localeCompare(b.content.toLowerCase()));
+  return (b.content.localeCompare(a.content));
 };
 
-export default masterList;
-
-
-/*
-  removeTask(task) {
-    this.data.splice(this.data.indexOf(task), 1);
-  }
-*/
+export default masterList();

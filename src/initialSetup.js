@@ -1,8 +1,7 @@
-import makeTask from './task';
-import masterList from './masterList';
+import makeTask from "./task";
+import masterList from "./masterList";
 import { renderMain, renderAddTaskModal, renderSideBar } from './render';
-import DOM from './DOMCache';
-import { addInitialEventListeners, addMainEventListeners,  addSideTimeEventListeners,  addSideProjectEventListeners  } from './addELs.js';
+import DOM from "./DOMCache";
 
 const today = new Date();
 today.setHours(0, 0, 0, 0);
@@ -43,12 +42,7 @@ masterList.editTask(sampleTask6, 'project', 'Housework');
 masterList.editTask(sampleTask7, 'project', 'Housework');
 
 masterList.sortByDate();
+console.log(masterList.data)
 renderMain(masterList, 'today', null);
 renderAddTaskModal(DOM.body, masterList.getListOfProjects());
 renderSideBar(masterList.getListOfProjects());
-
-addInitialEventListeners();
-addMainEventListeners();
-addSideTimeEventListeners();
-addSideProjectEventListeners();
-
