@@ -1,4 +1,5 @@
 import DOM from './DOMCache';
+import { removeCardEventListeners } from './addELs'; 
 
 function renderCard(task) {
   const checkbox = document.createElement('input');
@@ -62,15 +63,9 @@ export function renderMain(masterList, option, byProjectName = null) {
   let pastDue = null;
   let weekGroup = null;
 
-  // Remove everything from main and from masterList.
-  // Should remove event listeners from firstChild
-
-  /*
-  for (let i = 0; i < DOM.cardCheckBoxs.length; i++) {
-    DOM.cardEditBtns[i].removeEventListener('click', editTask);
-    DOM.cardRemoveBtns[i].removeEventListener('click', removeTask);;
-    //DOM.cardCheckBoxs[i].removeEventListener();
-  }*/
+  for (const item of masterList.displayedList) {
+    removeCardEventListeners(item);
+  }
 
   while (DOM.main.firstChild) {
     DOM.main.removeChild(DOM.main.firstChild);

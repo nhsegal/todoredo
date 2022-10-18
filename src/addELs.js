@@ -7,64 +7,70 @@ import DOM from './DOMCache';
 let editting = false;
 let IDNumber = null;
 
+
+
+const editTask = (e) => {
+  editting = true;
+  IDNumber = e.target.parentElement.getAttribute('data-id');
+  const taskToEdit = masterList.data.filter((e) => (e.id == IDNumber))[0];
+  const yyyy = taskToEdit.date.getFullYear();
+  const mm = taskToEdit.date.getMonth() + 1;
+  const dd = taskToEdit.date.getDate();
+  let taskDate = String(10000 * yyyy + 100 * mm + dd);
+  taskDate = `${taskDate.slice(0, 4)}-${taskDate.slice(
+    4,
+    6,
+  )}-${taskDate.slice(6, 8)}`;
+  DOM.newTaskContent.value = taskToEdit.content;
+  DOM.newTaskDate.value = taskDate;
+  DOM.newTaskProject.value = taskToEdit.project;
+  for (const option of DOM.newTaskPriority) {
+    if (option.value === taskToEdit.priority) {
+      option.checked = true;
+    }
+  }
+  DOM.addTaskModal.classList.toggle('closed');
+};
+
+const removeTask = (e) => {
+  IDNumber = e.target.parentElement.getAttribute('data-id');
+  const taskToDelete = masterList.data.filter((t) => (t.id == IDNumber))[0];
+  masterList.removeTask(taskToDelete);
+  localStorage.setItem('oldData', JSON.stringify(masterList.data));
+  masterList.displayedList.splice(
+    masterList.displayedList.indexOf(taskToDelete),
+    1,
+  );
+  localStorage.setItem(
+    'oldDisplayList',
+    JSON.stringify(masterList.displayedList),
+  );
+  renderMain(
+    masterList,
+    currentSettings.viewBy,
+    currentSettings.whichProject,
+  );
+  addMainEventListeners();
+};
+
+const changeIsCompleted = function (box) {
+  IDNumber = box.target.getAttribute('data-id');
+  const retrievedTask = masterList.data.filter((e) => (e.id == IDNumber))[0];
+  if (this.checked) {
+    retrievedTask.isCompleted = true;
+    box.target.parentElement.classList.add('is-completed');
+    masterList.editTask(retrievedTask, 'isCompleted', true);
+  } else {
+    retrievedTask.isCompleted = false;
+    box.target.parentElement.classList.remove('is-completed');
+  }
+};
+
+
+
 function addCardEventListeners(task) {
   const checkbox = document.querySelector(`[data-id="${task.id}"] input`);
-  checkbox.addEventListener('change', function (box) {
-    IDNumber = box.target.getAttribute('data-id');
-    const retrievedTask = masterList.data.filter((e) => (e.id == IDNumber))[0];
-    if (this.checked) {
-      retrievedTask.isCompleted = true;
-      box.target.parentElement.classList.add('is-completed');
-      masterList.editTask(retrievedTask, 'isCompleted', true);
-    } else {
-      retrievedTask.isCompleted = false;
-      box.target.parentElement.classList.remove('is-completed');
-    }
-  });
-
-  const editTask = (e) => {
-    editting = true;
-    IDNumber = e.target.parentElement.getAttribute('data-id');
-    const taskToEdit = masterList.data.filter((e) => (e.id == IDNumber))[0];
-    const yyyy = taskToEdit.date.getFullYear();
-    const mm = taskToEdit.date.getMonth() + 1;
-    const dd = taskToEdit.date.getDate();
-    let taskDate = String(10000 * yyyy + 100 * mm + dd);
-    taskDate = `${taskDate.slice(0, 4)}-${taskDate.slice(
-      4,
-      6,
-    )}-${taskDate.slice(6, 8)}`;
-    DOM.newTaskContent.value = taskToEdit.content;
-    DOM.newTaskDate.value = taskDate;
-    DOM.newTaskProject.value = taskToEdit.project;
-    for (const option of DOM.newTaskPriority) {
-      if (option.value === task.priority) {
-        option.checked = true;
-      }
-    }
-    DOM.addTaskModal.classList.toggle('closed');
-  };
-
-  const removeTask = (e) => {
-    IDNumber = e.target.parentElement.getAttribute('data-id');
-    const taskToDelete = masterList.data.filter((t) => (t.id == IDNumber))[0];
-    masterList.removeTask(taskToDelete);
-    localStorage.setItem('oldData', JSON.stringify(masterList.data));
-    masterList.displayedList.splice(
-      masterList.displayedList.indexOf(taskToDelete),
-      1,
-    );
-    localStorage.setItem(
-      'oldDisplayList',
-      JSON.stringify(masterList.displayedList),
-    );
-    renderMain(
-      masterList,
-      currentSettings.viewBy,
-      currentSettings.whichProject,
-    );
-    addMainEventListeners();
-  };
+  checkbox.addEventListener('change', changeIsCompleted);
 
   const editBtn = document.querySelectorAll(`[data-id="${task.id}"] button`)[0];
   editBtn.addEventListener('click', editTask);
@@ -73,6 +79,18 @@ function addCardEventListeners(task) {
     `[data-id="${task.id}"] button`,
   )[1];
   removeBtn.addEventListener('click', removeTask);
+}
+
+//  Adding removeEvent function to avoid memory leaks
+export function removeCardEventListeners(task) {
+  const checkbox = document.querySelector(`[data-id="${task.id}"] input`);
+  checkbox.removeEventListener('change', changeIsCompleted);
+  const editBtn = document.querySelectorAll(`[data-id="${task.id}"] button`)[0];
+  editBtn.removeEventListener('click', editTask);
+  const removeBtn = document.querySelectorAll(
+    `[data-id="${task.id}"] button`,
+  )[1];
+  removeBtn.removeEventListener('click', removeTask);
 }
 
 export function addMainEventListeners() {
